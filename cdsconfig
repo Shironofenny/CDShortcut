@@ -1,0 +1,162 @@
+#!/bin/sh
+
+# This file is used to configurate the cds command
+# Type "cdsconfig -h / --help" further information
+
+# Written by Fenny Zhang
+# Last revise: 30th Nov, 2013
+
+# The name of the source file
+filename="/home/fenny/.shortcut"
+
+# The following information is used when there is no argument in input
+PrintUsage()
+{
+	echo ""
+	echo " CDS lack of certain argument."
+	echo " Refer to cds -h / --help for further information."
+	echo ""
+}
+
+PrintHelp()
+{
+	echo " Help page "
+	echo " CDS can get to a restored directory using shortcuts"
+}
+
+PrintErrorMessage()
+{
+	echo ""
+	echo " The shortcut you typed does not exist in current configuration. "
+	echo ""
+}
+
+ListShortcuts()
+{
+	# The line number used in count
+	FE_CDS_count=1
+
+	echo ""
+	echo " Following configurations are available now: "
+	echo ""
+	while read FE_CDS_line
+	do
+
+		# Delete comment lines and empty lines
+
+		if [ "${FE_CDS_line%%\ *}" = "#" ]; then
+			continue
+		elif [ "$FE_CDS_line" = "" ]; then
+			continue
+		fi
+
+		# Split the line into three parts: shortcut, directory and document
+		
+		FE_CDS_shortcut=${FE_CDS_line%%~*}
+		FE_CDS_targetDir="${FE_CDS_line#*~}"
+		FE_CDS_directory="${FE_CDS_targetDir%~*}"
+		FE_CDS_document="${FE_CDS_line##*~}"
+
+		echo "  $FE_CDS_count)\tSHCT = $FE_CDS_shortcut\tDIR = $FE_CDS_directory"
+		echo "  \tDescription: $FE_CDS_document"
+		echo ""
+
+		FE_CDS_count=$(( $FE_CDS_count + 1 ))
+
+	done < "$filename"
+	
+	echo " Please type \"cds SHCT\" to change your directory"
+	echo ""
+
+}
+
+# Initialize variables
+	
+	# The flag for not sufficient argument
+	NAflag=1
+
+# See the extra options
+if [ $# -lt 1 ]; then
+	NAflag=1
+else
+	while [ $# -gt 0 ]
+	do
+		option="$1"
+		shift
+		case "$option" in
+			"-l"|"--list")
+				ListShortcuts $1;
+				exit 1;;
+			"-h"|"--help")
+				PrintHelp;
+				exit 1;;
+			"-s"|"--shortcut")
+				shortcut=$1;
+				NAflag=0;
+				shift;;
+			"-c"|"--comment")
+				comment="$1";
+				shift;;
+			"-r"|"--remove")
+				removeItem="$1";
+				NAflag=0;
+				shift;;
+			*);;
+		esac
+	done
+fi
+
+if [ $NAflag -eq 1 ]; then
+	PrintUsage
+	exit 0
+fi
+
+if [ "$removeItem" != "" ]; then
+
+	# Initialize the line counter
+	lineNum=0
+
+	# Initialize the number of lines of comment
+	commentLine=0
+
+	while read line
+	do
+
+		# Get current line number
+		lineNum=$(( $lineNum+1 ))
+
+		# Delete comment lines and empty lines
+
+		if [ "${line%%\ *}" = "#" ]; then
+			continue
+		elif [ "$line" = "" ]; then
+			continue
+		fi
+
+		# Once get out of the comment area, restore the number of comment lines
+		if [ $commentLine -eq 0 ]; then
+			commentLine=$(( $lineNum-1 ))
+		fi
+
+		# Split the line into three parts: shortcut, directory and document
+		
+		shortcut=${line%%~*}
+
+		if [ "$removeItem" = "$shortcut" -o "$removeItem" = "$(( $lineNum-$commentLine))" ]; then
+			sed -i ${lineNum}d $filename
+			exit 1
+		fi
+
+	done < "$filename"
+
+fi
+
+if [ "$shortcut" != "" ]; then
+	
+	if [ "$comment" = "" ]; then
+		comment="Added at "$(date)
+	fi
+	
+	echo "$shortcut~$PWD~$comment" >> "$filename"
+
+fi
