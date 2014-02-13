@@ -37,17 +37,25 @@ PrintHelp()
 	echo ""
 }
 
-PrintErrorMessage()
+PrintUnfoundShortCut()
 {
 	echo ""
-	echo " The shortcut you typed does not exist in current configuration. "
+	echo "The shortcut you typed does not exist in current configuration. "
 	echo ""
 }
 
 PrintUnfoundArgument()
 {
 	echo ""
-	echo " Can't find a match to the argument. "
+	echo "Can't find a match to the argument. "
+	echo ""
+}
+
+PrintAlreadyExistShortCut()
+{
+	echo ""
+	echo "The shortcut you wanted to add already exists in the list."
+	echo "Please use another shortcut name."
 	echo ""
 }
 
@@ -150,6 +158,9 @@ if [ "$FE_CDS_Remove" != "" ]; then
 	# Initialize the number of lines of comment
 	FE_CDS_CommentLine=0
 
+	# Initialize the flag that the shortcut exists
+	FE_CDS_rflag=0
+
 	while read line
 	do
 
@@ -175,10 +186,15 @@ if [ "$FE_CDS_Remove" != "" ]; then
 
 		if [ "$FE_CDS_Remove" = "$FE_CDS_RemoveShortCut" -o "$FE_CDS_Remove" = "$(( $FE_CDS_lineNum-$FE_CDS_CommentLine))" ]; then
 			sed -i ${FE_CDS_lineNum}d $FE_CDS_Filename
+			FE_CDS_rflag=1
 			break
 		fi
 
 	done < "$FE_CDS_Filename"
+
+	if [ $FE_CDS_rflag -eq 0 ]; then
+		PrintUnfoundShortCut
+	fi
 
 fi
 
@@ -186,11 +202,42 @@ fi
 
 if [ "$FE_CDS_NewShortCut" != "" ]; then
 	
-	if [ "$FE_CDS_NewComment" = "" ]; then
-		FE_CDS_NewComment="Added at "$(date)
-	fi
+	FE_CDS_aflag=1
+
+	while read FE_CDS_line
+	do
+
+		# Delete comment lines and empty lines
+
+		if [ "${FE_CDS_line%%\ *}" = "#" ]; then
+			continue
+		elif [ "$FE_CDS_line" = "" ]; then
+			continue
+		fi
+
+		# Split the line into three parts: shortcut, directory and document
+		
+		FE_CDS_shortcut=${FE_CDS_line%%~*}
+
+		if [ $FE_CDS_NewShortCut == $FE_CDS_shortcut ]; then
+			FE_CDS_aflag=0
+		fi
+
+	done < "$FE_CDS_Filename"
+
+	if [ $FE_CDS_aflag -eq 1 ]; then
 	
-	echo "$FE_CDS_NewShortCut~$PWD~$FE_CDS_NewComment" >> "$FE_CDS_Filename"
+		if [ "$FE_CDS_NewComment" = "" ]; then
+			FE_CDS_NewComment="Added at "$(date)
+		fi
+	
+		echo "$FE_CDS_NewShortCut~$PWD~$FE_CDS_NewComment" >> "$FE_CDS_Filename"
+
+	else
+
+		PrintAlreadyExistShortCut
+
+	fi
 
 fi
 
@@ -227,7 +274,7 @@ if [ $FE_CDS_sflag -eq 0 ]; then
 	done < "$FE_CDS_Filename"
 
 	if [ "$FE_CDS_targetDir" = "" ]; then
-		PrintErrorMessage
+		PrintUnfoundShortCut
 		FE_CDS_sflag=1
 	fi
 
@@ -256,6 +303,8 @@ unset FE_CDS_NewComment
 unset FE_CDS_lineNum
 unset FE_CDS_CommentLine
 unset FE_CDS_RemoveShortCut
+unset FE_CDS_rflag
+unset FE_CDS_aflag
 
 unset FE_CDS_line
 unset FE_CDS_count

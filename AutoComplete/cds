@@ -7,7 +7,7 @@ _cds()
 	OPTS=""
 
 	# Check whether the syntax is right when calling for complete
-	if [ ${PREV} != "cds" ]; then
+	if [ ${PREV} != "cds" -a ${PREV} != "-r" ]; then
 		return 0
 	fi
 
