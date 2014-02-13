@@ -1,0 +1,39 @@
+_cds()
+{
+	local CUR PREV OPTS
+	COMPREPLY=()
+	CUR="${COMP_WORDS[COMP_CWORD]}"
+	PREV="${COMP_WORDS[COMP_CWORD-1]}"
+	OPTS=""
+
+	# Check whether the syntax is right when calling for complete
+	if [ ${PREV} != "cds" ]; then
+		return 0
+	fi
+
+	local filename="/home/fenny/.shortcut"
+	
+	while read FE_CDS_line
+	do
+
+		# Delete comment lines and empty lines
+
+		if [ "${FE_CDS_line%%\ *}" = "#" ]; then
+			continue
+		elif [ "$FE_CDS_line" = "" ]; then
+			continue
+		fi
+
+		# Split the line into three parts: shortcut, directory and document
+		
+		FE_CDS_shortcut=${FE_CDS_line%%~*}
+		OPTS="$OPTS $FE_CDS_shortcut"
+
+	done < "$filename"
+
+	COMPREPLY=( $(compgen -W "${OPTS}" -- ${CUR}) )
+
+	return 0
+}
+
+complete -F _cds cds

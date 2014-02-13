@@ -174,4 +174,6 @@ if [ $FE_CDS_sflag -eq 0 ]; then
 
 	fi
 
+	unset filename
+
 fi
