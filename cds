@@ -13,6 +13,16 @@
 # The name of the source file
 FE_CDS_Filename="/home/fenny/.shortcut"
 
+if [ ! -f "$FE_CDS_Filename" ]
+then
+	touch $FE_CDS_Filename
+	echo "The default shortcut storage file doesn't exists."
+	echo "Created file $FE_CDS_Filename . "
+	echo "The auto complete function might not work under this circumstances."
+	echo "Further work needs to be checked for /etc/bash_completion.d/cds"
+fi
+
+
 # The print usage function
 PrintUsage()
 {
@@ -31,9 +41,11 @@ PrintHelp()
 	echo " [Usage] cds [options] shortcut "
 	echo ""
 	echo " [-h / --help]: Get the help page. "
-	echo " [-l / --list]: List all configured shortcuts in the system"
-	echo ""
-	echo " See also: cdsconfig --help"
+	echo " [-l / --list]: List all configured shortcuts in the system. "
+	echo " [-s / --shortcut]: Add the current directory (\$PWD) into the shortcut system with a specified shortcut that follows this argument. "
+	echo " [-c / --comment]: Add an comment to the shortcut added, only valid with -s arugument. "
+	echo "                   If this is not provided, the time that the shortcut is added would be treated as default comment. "
+	echo " [-r / --remove]: Remove the shortcut following this argument. "
 	echo ""
 }
 
