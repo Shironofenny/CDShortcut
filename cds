@@ -157,7 +157,7 @@ fi
 
 # Check if FE_CDS_command is not a short cut
 if [[ $FE_CDS_command == -* ]]; then
-	FE_CDS_sflag=1
+	FE_CDS_sflag=2
 fi
 
 # Check if there is anything to be removed.
