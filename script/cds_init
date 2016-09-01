@@ -2,7 +2,7 @@
 # CDS INIT SCRIPT
 
 # Source the auto-completion file. The existance of the following file should be granted by installation
-FE_CDS_COMPLETE_FILE="$HOME/.cdshct/cds_complete"
+FE_CDS_COMPLETE_FILE="$HOME/.cdshct/script/cds_complete"
 
 if [ -f $FE_CDS_COMPLETE_FILE ]; then
 	source $FE_CDS_COMPLETE_FILE
