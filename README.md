@@ -5,13 +5,13 @@ Using this command, you can change directory with shortcuts
 
 # Installation
 
-## Automatic installation:
+## Automatic installation (user level installation):
 
 1. Change directory to this repository
 2. Run install.sh
 3. Enjoy
 
-## Alternative manual installation (required if you have sudo acccess):
+## Alternative manual installation (system level installation, require root acccess):
 
 1. Copy ./cds to somewhere your $PATH can reach (for instance /usr/bin)
  
