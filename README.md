@@ -39,9 +39,12 @@ Using this command, you can change directory with shortcuts
 
 cds [options] shortcut 
 
- [-h / --help]: Get the help page. 
- [-l / --list]: List all configured shortcuts in the system. 
- [-s / --shortcut]: Add the current directory ($PWD) into the shortcut system with a specified shortcut that follows this argument. 
- [-c / --comment]: Add an comment to the shortcut added, only valid with -s arugument. 
-                   If this is not provided, the time that the shortcut is added would be treated as default comment. 
+ [-h / --help]: Get the help page.
+ 
+ [-l / --list]: List all configured shortcuts in the system.
+ 
+ [-s / --shortcut]: Add the current directory ($PWD) into the shortcut system with a specified shortcut that follows this argument.
+ 
+ [-c / --comment]: Add an comment to the shortcut added, only valid with -s arugument. If this is not provided, the time that the shortcut is added would be treated as default comment. 
+
  [-r / --remove]: Remove the shortcut following this argument. 
