@@ -14,20 +14,26 @@ Using this command, you can change directory with shortcuts
 ## Alternative manual installation (required if you have sudo acccess):
 
 1. Copy ./cds to somewhere your $PATH can reach (for instance /usr/bin)
-```bash
-[sudo] cp cds /usr/bin
-```
+ 
+ ```bash
+ [sudo] cp cds /usr/bin
+ ```
 2. [Optional] Rename the auto-completion file so that it might be easier for you to understand that it is bonded to the command "cds" ./script/cds_complete to ./script/cds
-```bash
-cd script
-mv cds_complete cds
-```
+ 
+ ```bash
+ mv script/cds_complete script/cds
+ ```
 3. Move the completion file to the bash-completion directory (/etc/bash_completion.d)
+ 
+ ```bash
+ cp script/cds /etc/bash_completion.d/
+ ```
 4. Add alias to run cds under current shell (required for the command "cd") and then source $HOME/.bashrc, or restart your terminal
-```bash
-echo "alias cds='. cds'" >> $HOME/.bashrc
-source $HOME/.bashrc
-```
+ 
+ ```bash
+ echo "alias cds='. cds'" >> $HOME/.bashrc
+ source $HOME/.bashrc
+ ```
 
 ## Usage
 
