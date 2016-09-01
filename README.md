@@ -26,7 +26,7 @@ Using this command, you can change directory with shortcuts
 3. Move the completion file to the bash-completion directory (/etc/bash_completion.d)
  
  ```
- cp script/cds /etc/bash_completion.d/
+ [sudo] cp script/cds /etc/bash_completion.d/
  ```
 4. Add alias to run cds under current shell (required for the command "cd") and then source $HOME/.bashrc, or restart your terminal
  
