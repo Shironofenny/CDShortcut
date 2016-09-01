@@ -33,7 +33,6 @@ fi
 echo "Modifying $HOME/.bashrc ... "
 
 echo "" >> $HOME/.bashrc
-echo "export PATH=\$PATH:$FE_CDS_HOMEDIR" >> $HOME/.bashrc
 echo "source $FE_CDS_HOMEDIR/script/cds_init" >> $HOME/.bashrc
 
 . $HOME/.bashrc

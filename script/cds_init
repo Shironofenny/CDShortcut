@@ -1,6 +1,8 @@
 #!/bin/bash
 # CDS INIT SCRIPT
 
+export PATH=$PATH:$HOME/.cdshct
+
 # Source the auto-completion file. The existance of the following file should be granted by installation
 FE_CDS_COMPLETE_FILE="$HOME/.cdshct/script/cds_complete"
 

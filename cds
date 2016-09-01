@@ -13,15 +13,19 @@
 # The name of the source file
 FE_CDS_Filename="$HOME/.cdshct/shortcut"
 
+if [ ! -d "$HOME/.cdshct" ]
+then
+	mkdir $HOME/.cdshct
+	echo "The default shortcut installation directory doesn't exist."
+	echo "Created directory $HOME/.cdshct. "
+fi
+
 if [ ! -f "$FE_CDS_Filename" ]
 then
 	touch $FE_CDS_Filename
 	echo "The default shortcut storage file doesn't exists."
 	echo "Created file $FE_CDS_Filename . "
-	echo "The auto complete function might not work under this circumstances."
-	echo "Further work needs to be checked for /etc/bash_completion.d/cds"
 fi
-
 
 # The print usage function
 PrintUsage()
