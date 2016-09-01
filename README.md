@@ -48,3 +48,7 @@ cds [options] shortcut
  [-c / --comment]: Add an comment to the shortcut added, only valid with -s arugument. If this is not provided, the time that the shortcut is added would be treated as default comment. 
 
  [-r / --remove]: Remove the shortcut following this argument. 
+
+## Example
+
+![Alt text](/example.png?raw=true "Example usage of CDShortcut)
