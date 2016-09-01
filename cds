@@ -11,7 +11,7 @@
 # Last revise: 30th Nov, 2013
 
 # The name of the source file
-FE_CDS_Filename="/home/fenny/.shortcut"
+FE_CDS_Filename="$HOME/.cdshct/shortcut"
 
 if [ ! -f "$FE_CDS_Filename" ]
 then
@@ -287,7 +287,7 @@ if [ $FE_CDS_sflag -eq 0 ]; then
 
 	if [ "$FE_CDS_targetDir" = "" ]; then
 		PrintUnfoundShortCut
-		FE_CDS_sflag=1
+		FE_CDS_sflag=2
 	fi
 
 	# Change current directory if the command is correct
@@ -299,6 +299,10 @@ if [ $FE_CDS_sflag -eq 0 ]; then
 
 	fi
 
+fi
+
+if [ $FE_CDS_sflag -eq 1 ]; then
+	PrintUsage
 fi
 
 # Unset all the reusable parameters defined

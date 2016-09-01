@@ -11,7 +11,7 @@ _cds()
 		return 0
 	fi
 
-	local filename="/home/fenny/.shortcut"
+	local filename="$HOME/.cdshct/shortcut"
 	
 	while read FE_CDS_line
 	do

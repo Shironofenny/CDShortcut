@@ -1,0 +1,16 @@
+#!/bin/bash
+# CDS INIT SCRIPT
+
+# Source the auto-completion file. The existance of the following file should be granted by installation
+FE_CDS_COMPLETE_FILE="$HOME/.cdshct/cds_complete"
+
+if [ -f $FE_CDS_COMPLETE_FILE ]; then
+	source $FE_CDS_COMPLETE_FILE
+elif [ -f "./cds_complete" ]; then
+	source ./cds_complete
+fi
+
+unset FE_CDS_COMPLETE_FILE
+
+# Make command execution local to the parent shell:
+alias cds='. cds'
