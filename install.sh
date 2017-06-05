@@ -33,7 +33,16 @@ fi
 echo "Modifying $HOME/.bashrc ... "
 
 echo "" >> $HOME/.bashrc
+echo "# Added by CD Shortcut" >> $HOME/.bashrc
 echo "source $FE_CDS_HOMEDIR/script/cds_init" >> $HOME/.bashrc
+
+if [ ! -f $HOME/.bash_aliases ]; then
+	echo ".bash_aliases file not found, writing alias to .bashrc."
+	echo "alias cds='. cds'" >> $HOME/.bashrc
+else
+	echo ".bash_aliases file found, writing alias to .bash_aliases."
+	echo "alias cds='. cds'" >> $HOME/.bash_aliases
+fi
 
 . $HOME/.bashrc
 
