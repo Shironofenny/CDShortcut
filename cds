@@ -299,7 +299,7 @@ if [ $FE_CDS_sflag -eq 0 ]; then
 	if [ $FE_CDS_sflag -eq 0 ]; then
 
 		echo $FE_CDS_targetDir
-		cd $FE_CDS_targetDir
+		cd "$FE_CDS_targetDir"
 
 	fi
 
