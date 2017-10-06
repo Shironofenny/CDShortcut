@@ -51,4 +51,4 @@ cds [options] shortcut
 
 ## Example
 
-![Alt text](/example.png?raw=true "Example usage of CDShortcut)
+![example](./example.png?raw=true "Example usage of CDShortcut")
